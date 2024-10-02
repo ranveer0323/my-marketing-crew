@@ -59,7 +59,7 @@ def main():
         layout="centered"
     )
 
-    # Display the logo
+    # logo
     st.image("logo.png", width=704)
 
     # Get API key before proceeding
