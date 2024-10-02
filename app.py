@@ -60,12 +60,12 @@ def main():
     )
 
     # Display the logo
-    st.image("logo.png", width=400)
+    st.image("logo.png", width=704)
 
     # Get API key before proceeding
     groq_api_key = initialize_api_keys()
 
-    st.title("My Marketing Crew 🚀")
+    st.title("v0.0.1 by Ranveer Singh Ranawat🚀☢")
 
     with st.form("brand_info_form"):
         brand_name = st.text_input("Brand Name")
