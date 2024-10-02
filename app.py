@@ -148,8 +148,6 @@ def display_results():
 
     st.balloons()
 
-# Keep your existing handle_uploaded_file function here
-
 
 def handle_uploaded_file(uploaded_file):
     if uploaded_file is None:
