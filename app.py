@@ -65,7 +65,7 @@ def main():
     # Get API key before proceeding
     groq_api_key = initialize_api_keys()
 
-    st.title("v0.0.1 by Ranveer Singh Ranawat🚀☢")
+    st.title("v0.0.1 by Ranveer Singh Ranawat☢")
 
     with st.form("brand_info_form"):
         brand_name = st.text_input("Brand Name")
