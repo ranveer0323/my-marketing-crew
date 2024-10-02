@@ -16,7 +16,7 @@ def initialize_api_keys():
 
 
 def initialize_llm(groq_api_key):
-    return ChatGroq(temperature=0.7, model_name="llama-3.1-70b-versatile")
+    return ChatGroq(temperature=0.7, model_name="llama-3.2-90b-text-preview")
 
 
 def handle_uploaded_file(uploaded_file):
