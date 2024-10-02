@@ -151,5 +151,22 @@ def display_results():
 # Keep your existing handle_uploaded_file function here
 
 
+def handle_uploaded_file(uploaded_file):
+    if uploaded_file is None:
+        return None, None
+
+    file_extension = os.path.splitext(uploaded_file.name)[1]
+    temp_filename = f"temp_brand_document{file_extension}"
+
+    content = uploaded_file.read()
+
+    with open(temp_filename, "wb") as f:
+        f.write(content)
+
+    abs_path = os.path.abspath(temp_filename)
+
+    return abs_path, temp_filename
+
+
 if __name__ == "__main__":
     main()
