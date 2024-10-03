@@ -33,9 +33,10 @@ def create_tasks(agents, brand_info):
             description='1. Review the Brand and Customer Analysis Report.\n'
                         '2. Develop a comprehensive marketing strategy that includes:\n'
                         '   a. Key objectives and KPIs\n'
-                        '   b. Platform-specific strategies (Instagram, LinkedIn)\n'
+                        '   b. Platform-specific strategies (Choose the appropriate platforms for the brand.)\n'
                         '   c. Content themes and guidelines\n'
-                        '3. Ensure the strategy addresses each customer segment.',
+                        'Depending on the brand the strategy can be creative and look unconventional ways to go about their marketing. \n'
+                        '3. Ensure the strategy addresses each customer segment, their behavior and preferences and builds on unique insights.',
             agent=agents['senior_social_media_marketer'],
             expected_output='A detailed Marketing Strategy Report in markdown format.',
             output_file='marketing_strategy.md'
