@@ -39,7 +39,8 @@ def create_tasks(agents, brand_info):
                         '3. Ensure the strategy addresses each customer segment, their behavior and preferences and builds on unique insights.',
             agent=agents['senior_social_media_marketer'],
             expected_output='A detailed Marketing Strategy Report in markdown format.',
-            output_file='marketing_strategy.md'
+            output_file='marketing_strategy.md',
+            human_input=True
         ),
         Task(
             description='1. Review the Brand Analysis and Marketing Strategy reports.\n'
@@ -50,7 +51,8 @@ def create_tasks(agents, brand_info):
                         '3. Suggest content outline for each post in the campaign, paired with examples.',
             agent=agents['content_creator'],
             expected_output='A comprehensive Content and Campaign Plan in markdown format.',
-            output_file='content_and_campaign_plan.md'
+            output_file='content_and_campaign_plan.md',
+            human_input=True
         )
     ]
 
