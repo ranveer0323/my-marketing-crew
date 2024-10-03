@@ -19,11 +19,12 @@ def create_tasks(agents, brand_info):
         Task(
             description=f'1. Analyze the following brand information:\n{brand_info_text}\n'
                         f'2. {"Read and analyze the provided brand document at: " + brand_document_path if brand_document_path else "No brand document provided."}\n'
-                        '3. Conduct comprehensive market research to identify 3-5 key customer segments.\n'
+                        '3. Conduct comprehensive market research to identify 3-5 key customer segments, their behaviour and prefrences.'
+                        'Look for and try to find unique and specific insights if possible.'
                         '4. Compile a detailed report that includes:\n'
                         '   a. Brand analysis (industry, purpose, products/services, vision, social media presence)\n'
-                        '   b. Customer segment profiles\n'
-                        '   c. Market trends and competitive analysis',
+                        '   b. Customer segment profiles, behaviour and preference analysis and unique insights for each segemnt.\n'
+                        '   c. Market trends and competitive analysis.',
             agent=agents['senior_consultant'],
             expected_output='A comprehensive Brand and Customer Analysis Report in markdown format.',
             output_file='brand_and_customer_analysis.md'
