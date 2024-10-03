@@ -45,9 +45,9 @@ def create_tasks(agents, brand_info):
             description='1. Review the Brand Analysis and Marketing Strategy reports.\n'
                         '2. Create a comprehensive content plan that includes:\n'
                         '   a. Two detailed campaign ideas\n'
-                        '   b. Content calendar with post details for Instagram and LinkedIn\n'
+                        '   b. A weekly Content calendar with post details for the chosen social media platforms\n'
                         '   c. Best timing and frequency for posts\n'
-                        '3. Write creative content for each post in the campaign.',
+                        '3. Suggest content outline for each post in the campaign, paired with examples.',
             agent=agents['content_creator'],
             expected_output='A comprehensive Content and Campaign Plan in markdown format.',
             output_file='content_and_campaign_plan.md'
