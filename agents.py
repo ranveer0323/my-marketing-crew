@@ -55,7 +55,7 @@ def create_agents(llm):
         'content_creator': Agent(
             role="Creative Content Strategist",
             goal="Generate personalized creative content for each identified audience segment for Instagram and LinkedIn",
-            backstory='''You are a former advertising executive and content specialist. 
+            backstory='''You are a former advertising executive, copy writer and content specialist. 
             With 15 years in the industry, you have a deep understanding of brand voice and storytelling 
             techniques across various media.''',
             verbose=True,
