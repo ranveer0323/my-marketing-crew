@@ -2,6 +2,9 @@ from crewai import Agent
 from tools.search_tools import SearchTools
 from crewai_tools import FileReadTool
 from langchain_groq import ChatGroq
+from crewai_tools import ScrapeWebsiteTool
+
+web_scraper = ScrapeWebsiteTool()
 
 
 def create_agents(llm):
@@ -20,7 +23,8 @@ def create_agents(llm):
             tools=[file_read_tool,
                    SearchTools.search_internet,
                    SearchTools.search_instagram,
-                   SearchTools.search_linkedin],
+                   SearchTools.search_linkedin,
+                   web_scraper],
             llm=llm
         ),
 
