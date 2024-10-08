@@ -27,7 +27,8 @@ def create_tasks(agents, brand_info):
                         '4. Compile a detailed report that includes:\n'
                         '   a. Brand analysis (industry, purpose, products/services, vision, social media presence)\n'
                         '   b. Customer segment profiles with goal-specific insights\n'
-                        '   c. Market trends and competitive analysis focused on similar campaign goals.',
+                        '   c. Market trends and competitive analysis focused on similar product campaigns by.'
+                        '      the brands competitors and the strategies they used',
             agent=agents['senior_consultant'],
             expected_output='A comprehensive Brand and Customer Analysis Report in markdown format.',
             output_file='brand_and_customer_analysis.md'
@@ -37,7 +38,7 @@ def create_tasks(agents, brand_info):
                         f'2. Develop a comprehensive marketing strategy aligned with the campaign goal: {campaign_goal}\n'
                         '3. Include in the strategy:\n'
                         '   a. Key objectives and KPIs directly tied to the campaign goal\n'
-                        '   b. Platform-specific strategies chosen based on goal effectiveness\n'
+                        '   b. Appropriate Social Media Platforms and Platform-specific strategies chosen based on goal effectiveness\n'
                         '   c. Content themes and guidelines that support the campaign goal\n'
                         '4. Ensure the strategy addresses each customer segment and how they relate to achieving the campaign goal.',
             agent=agents['senior_social_media_marketer'],
