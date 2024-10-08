@@ -1,9 +1,11 @@
 import streamlit as st
 import os
+from datetime import datetime, timedelta
 from crewai import Crew
 from langchain_groq import ChatGroq
 from agents import create_agents
 from tasks import create_tasks
+from date_utils import get_current_ist_time, validate_campaign_start_date
 
 
 def initialize_api_keys():
@@ -64,17 +66,30 @@ def main():
 
     groq_api_key = initialize_api_keys()
 
-    st.title("v0.0.2 by Ranveer Singh Ranawat☢")
+    st.title("v0.0.4 by Ranveer Singh Ranawat☢")
+
+    current_time = get_current_ist_time()
+    st.write(f"Current Time: {current_time.strftime('%Y-%m-%d %I:%M %p IST')}")
 
     with st.form("brand_info_form"):
         brand_name = st.text_input("Brand Name")
         industry = st.text_input("Industry")
         website = st.text_input("Website (if applicable)")
         description = st.text_area("Brief description of the brand")
-
-        # New campaign goal field
         campaign_goal = st.text_area("Campaign Goal",
                                      help="What do you want to achieve with this marketing campaign? (e.g., increase brand awareness, drive sales, launch a new product)")
+
+        # Add campaign start date picker
+        min_date = current_time.date()
+        max_date = min_date + timedelta(days=365)
+
+        campaign_start_date = st.date_input(
+            "Campaign Start Date",
+            min_value=min_date,
+            max_value=max_date,
+            value=min_date,
+            help="Select the start date for your campaign (must be today or a future date)"
+        )
 
         brand_document = st.file_uploader(
             "Upload brand document (optional)",
@@ -88,6 +103,8 @@ def main():
             st.error(
                 "Please fill in all required fields (Brand Name, Industry, Description, and Campaign Goal)."
             )
+        elif not validate_campaign_start_date(campaign_start_date):
+            st.error("Campaign start date must be today or a future date.")
         else:
             document_path, temp_filename = handle_uploaded_file(brand_document)
 
@@ -97,7 +114,9 @@ def main():
                 "website": website,
                 "description": description,
                 "campaign_goal": campaign_goal,
-                "brand_document_path": document_path
+                "campaign_start_date": campaign_start_date,
+                "brand_document_path": document_path,
+                "current_time": current_time
             }
 
             try:

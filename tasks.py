@@ -1,7 +1,13 @@
 from crewai import Task
+from date_utils import get_current_ist_time, get_week_dates, get_optimal_posting_times
 
 
 def create_tasks(agents, brand_info):
+    current_time = get_current_ist_time()
+    campaign_start_date = brand_info.get('campaign_start_date')
+    week_dates = get_week_dates(campaign_start_date)
+    optimal_times = get_optimal_posting_times()
+
     brand_name = brand_info.get('brand_name', '')
     industry = brand_info.get('industry', '')
     website = brand_info.get('website', '')
@@ -15,6 +21,8 @@ def create_tasks(agents, brand_info):
     Website: {website}
     Description: {description}
     Campaign Goal: {campaign_goal}
+    Campaign Start Date: {campaign_start_date}
+    Current Date: {current_time.strftime("%Y-%m-%d")}
     """
 
     tasks = [
@@ -27,8 +35,8 @@ def create_tasks(agents, brand_info):
                         '4. Compile a detailed report that includes:\n'
                         '   a. Brand analysis (industry, purpose, products/services, vision, social media presence)\n'
                         '   b. Customer segment profiles with goal-specific insights\n'
-                        '   c. Market trends and competitive analysis focused on similar product campaigns by.'
-                        '      the brands competitors and the strategies they used',
+                        '   c. Analysis and effectiveness of similar marketing campaigns by the brand\'s competitors \n'
+                        'Use emojis wherever appropriate to make the report look appealing.',
             agent=agents['senior_consultant'],
             expected_output='A comprehensive Brand and Customer Analysis Report in markdown format.',
             output_file='brand_and_customer_analysis.md'
@@ -38,9 +46,11 @@ def create_tasks(agents, brand_info):
                         f'2. Develop a comprehensive marketing strategy aligned with the campaign goal: {campaign_goal}\n'
                         '3. Include in the strategy:\n'
                         '   a. Key objectives and KPIs directly tied to the campaign goal\n'
-                        '   b. Appropriate Social Media Platforms and Platform-specific strategies chosen based on goal effectiveness\n'
+                        '   b. Platform-specific strategies based on the campaign goal\n'
                         '   c. Content themes and guidelines that support the campaign goal\n'
-                        '4. Ensure the strategy addresses each customer segment and how they relate to achieving the campaign goal.',
+                        f'4. Create a timeline starting from the campaign start date ({campaign_start_date}) (IST), outlining key milestones and phases\n'
+                        '5. Ensure all timing recommendations consider Indian Standard Time (IST) and typical Indian social media usage patterns.'
+                        'Use emojis wherever appropriate to make the report look appealing.',
             agent=agents['senior_social_media_marketer'],
             expected_output='A detailed Marketing Strategy Report in markdown format.',
             output_file='marketing_strategy.md'
@@ -50,9 +60,19 @@ def create_tasks(agents, brand_info):
                         f'2. Create a goal-oriented content plan for the campaign objective: {campaign_goal}\n'
                         '3. Include in the plan:\n'
                         '   a. Two detailed campaign ideas that directly support the goal\n'
-                        '   b. A weekly Content calendar with goal-aligned post details\n'
-                        '   c. Best timing and frequency for posts to maximize goal achievement\n'
-                        '4. Suggest content outline for each post, ensuring alignment with the campaign goal.',
+                        f'   b. A weekly content calendar starting from {campaign_start_date} with detailed post schedules\n'
+                        '   c. Best posting times based on Indian audience engagement patterns\n'
+                        f'4. Use the following week dates for the content calendar:\n{", ".join(week_dates)}\n'
+                        '5. Come up with optimal posting times for the seleced social media platforms, account for'
+                        f'campaign start date: {campaign_start_date} and the timezone based on this time: {current_time}.'
+
+                        '6. For each post in the calendar, specify:\n'
+                        '   - Exact date and time (in IST)\n'
+                        '   - Platform\n'
+                        '   - Content type and outline\n'
+                        '   - Goal alignment\n'
+                        f'7. If the campaign start date ({campaign_start_date}) is in the future, include preparation tasks and timelines leading up to the start date.'
+                        'Use emojis wherever appropriate to make the report look appealing.',
             agent=agents['content_creator'],
             expected_output='A comprehensive Content and Campaign Plan in markdown format.',
             output_file='content_and_campaign_plan.md'
