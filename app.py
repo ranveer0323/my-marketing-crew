@@ -62,16 +62,20 @@ def main():
     # logo
     st.image("logo.png", width=704)
 
-    # Get API key before proceeding
     groq_api_key = initialize_api_keys()
 
-    st.title("v0.0.1 by Ranveer Singh Ranawat☢")
+    st.title("v0.0.2 by Ranveer Singh Ranawat☢")
 
     with st.form("brand_info_form"):
         brand_name = st.text_input("Brand Name")
         industry = st.text_input("Industry")
         website = st.text_input("Website (if applicable)")
         description = st.text_area("Brief description of the brand")
+
+        # New campaign goal field
+        campaign_goal = st.text_area("Campaign Goal",
+                                     help="What do you want to achieve with this marketing campaign? (e.g., increase brand awareness, drive sales, launch a new product)")
+
         brand_document = st.file_uploader(
             "Upload brand document (optional)",
             type=["pdf", "docx", "txt"]
@@ -80,9 +84,9 @@ def main():
         submitted = st.form_submit_button("Generate Marketing Strategy")
 
     if submitted:
-        if not brand_name or not industry or not description:
+        if not brand_name or not industry or not description or not campaign_goal:
             st.error(
-                "Please fill in all required fields (Brand Name, Industry, and Description)."
+                "Please fill in all required fields (Brand Name, Industry, Description, and Campaign Goal)."
             )
         else:
             document_path, temp_filename = handle_uploaded_file(brand_document)
@@ -92,6 +96,7 @@ def main():
                 "industry": industry,
                 "website": website,
                 "description": description,
+                "campaign_goal": campaign_goal,
                 "brand_document_path": document_path
             }
 
@@ -110,8 +115,6 @@ def main():
                     result = marketing_crew.kickoff()
 
                 st.success("Marketing strategy generation complete!")
-
-                # Display results in tabs
                 display_results()
 
             except Exception as e:
