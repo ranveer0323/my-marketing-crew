@@ -91,9 +91,15 @@ def main():
             help="Select the start date for your campaign (must be today or a future date)"
         )
 
+        crm_file = st.file_uploader(
+            "Upload CRM data (CSV file)",
+            type=["csv"],
+            help="Upload your CRM data for customer segmentation analysis"
+        )
+
         brand_document = st.file_uploader(
             "Upload brand document (optional)",
-            type=["pdf", "docx", "txt"]
+            type=["txt"]
         )
 
         submitted = st.form_submit_button("Generate Marketing Strategy")
@@ -106,7 +112,8 @@ def main():
         elif not validate_campaign_start_date(campaign_start_date):
             st.error("Campaign start date must be today or a future date.")
         else:
-            document_path, temp_filename = handle_uploaded_file(brand_document)
+            brand_doc_path, brand_temp_filename, crm_path, crm_temp_filename = handle_uploaded_files(
+                brand_document, crm_file)
 
             brand_info = {
                 "brand_name": brand_name,
@@ -115,7 +122,8 @@ def main():
                 "description": description,
                 "campaign_goal": campaign_goal,
                 "campaign_start_date": campaign_start_date,
-                "brand_document_path": document_path,
+                "brand_document_path": brand_doc_path,
+                "crm_file_path": crm_path,
                 "current_time": current_time
             }
 
@@ -139,8 +147,10 @@ def main():
             except Exception as e:
                 st.error(f"An error occurred: {str(e)}")
             finally:
-                if temp_filename and os.path.exists(temp_filename):
-                    os.remove(temp_filename)
+                # Clean up temporary files
+                for temp_file in [brand_temp_filename, crm_temp_filename]:
+                    if temp_file and os.path.exists(temp_file):
+                        os.remove(temp_file)
 
 
 def display_results():
@@ -171,21 +181,24 @@ def display_results():
     st.balloons()
 
 
-def handle_uploaded_file(uploaded_file):
-    if uploaded_file is None:
-        return None, None
+def handle_uploaded_files(brand_document, crm_file):
+    brand_doc_path, brand_temp_filename = None, None
+    crm_path, crm_temp_filename = None, None
 
-    file_extension = os.path.splitext(uploaded_file.name)[1]
-    temp_filename = f"temp_brand_document{file_extension}"
+    if brand_document:
+        file_extension = os.path.splitext(brand_document.name)[1]
+        brand_temp_filename = f"temp_brand_document{file_extension}"
+        with open(brand_temp_filename, "wb") as f:
+            f.write(brand_document.read())
+        brand_doc_path = os.path.abspath(brand_temp_filename)
 
-    content = uploaded_file.read()
+    if crm_file:
+        crm_temp_filename = "temp_crm_data.csv"
+        with open(crm_temp_filename, "wb") as f:
+            f.write(crm_file.read())
+        crm_path = os.path.abspath(crm_temp_filename)
 
-    with open(temp_filename, "wb") as f:
-        f.write(content)
-
-    abs_path = os.path.abspath(temp_filename)
-
-    return abs_path, temp_filename
+    return brand_doc_path, brand_temp_filename, crm_path, crm_temp_filename
 
 
 if __name__ == "__main__":
