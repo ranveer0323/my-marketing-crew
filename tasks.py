@@ -69,9 +69,10 @@ def create_tasks(agents, brand_info):
         description='1. Review the Brand and Customer Analysis Report.\n'
                     f'2. Develop a comprehensive marketing strategy aligned with the campaign goal: {campaign_goal}\n'
                     '3. Include in the strategy:\n'
-                    '   a. Key objectives and KPIs directly tied to the campaign goal\n'
-                    '   b. Platform-specific strategies based on the campaign goal\n'
-                    '   c. Content themes and guidelines that support the campaign goal\n'
+                    '   a. Key objectives and KPIs directly tied to the campaign goal.\n'
+                    '   b. Platform-specific strategies based on the campaign goal.\n'
+                    '   c. Content themes and guidelines that support the campaign goal.\n'
+                    '   d. Search for appropriate Creator Handles for collaboration based on chosen Social Media Platforms.\n'
                     f'4. Create a timeline starting from the campaign start date ({campaign_start_date}) (IST), outlining key milestones and phases\n'
                     '5. Ensure all timing recommendations consider Indian Standard Time (IST) and typical Indian social media usage patterns.',
         agent=agents['senior_social_media_marketer'],
@@ -86,17 +87,17 @@ def create_tasks(agents, brand_info):
     content_plan_task = Task(
         description='1. Review the Brand Analysis and Marketing Strategy reports.\n'
                     f'2. Create a goal-oriented content plan for the campaign objective: {campaign_goal}\n'
-                    '3. Include in the plan:\n'
-                    '   a. Two detailed campaign ideas that directly support the goal\n'
-                    f'   b. A weekly content calendar starting from {campaign_start_date} with detailed post schedules\n'
-                    '   c. Best posting times based on Indian audience engagement patterns\n'
+                    '3. Must Include in the plan:\n'
+                    '   a. Two detailed Campaign Ideas that directly support the goal and example content.\n'
+                    f'  b. A weekly content calendar starting from {campaign_start_date} with detailed post schedules.\n'
+                    '   c. Best posting times based on Indian audience engagement patterns.\n'
                     f'4. Use the following week dates for the content calendar:\n{", ".join(week_dates)}\n'
                     '5. Come up with optimal posting times for the selected social media platforms, account for'
                     f'campaign start date: {campaign_start_date} and the timezone based on this time: {current_time}.'
-                    '6. For each post in the calendar, specify:\n'
+                    '6. For each post in the calendar, MUST specify:\n'
                     '   - Exact date and time (in IST)\n'
                     '   - Platform\n'
-                    '   - Content type and outline\n'
+                    '   - Content type and outline.\n'
                     '   - Goal alignment\n'
                     f'7. If the campaign start date ({campaign_start_date}) is in the future, include preparation tasks and timelines leading up to the start date.',
         agent=agents['content_creator'],

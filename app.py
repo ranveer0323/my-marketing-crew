@@ -10,7 +10,7 @@ from date_utils import get_current_ist_time, validate_campaign_start_date
 
 def initialize_api_keys():
     # Add API key input in sidebar
-    st.sidebar.title("API Configuration")
+    st.sidebar.title("API Configuration👩‍💻")
 
     # Option to use environment variable or manual input
     api_key_option = st.sidebar.radio(
@@ -72,11 +72,11 @@ def main():
     st.write(f"Current Time: {current_time.strftime('%Y-%m-%d %I:%M %p IST')}")
 
     with st.form("brand_info_form"):
-        brand_name = st.text_input("Brand Name")
-        industry = st.text_input("Industry")
-        website = st.text_input("Website (if applicable)")
-        description = st.text_area("Brief description of the brand")
-        campaign_goal = st.text_area("Campaign Goal",
+        brand_name = st.text_input("Brand Name🔤")
+        industry = st.text_input("Industry🏭")
+        website = st.text_input("Website (if applicable)🌐")
+        description = st.text_area("Brief Description of the Brand📝")
+        campaign_goal = st.text_area("Campaign Goal🎯",
                                      help="What do you want to achieve with this marketing campaign? (e.g., increase brand awareness, drive sales, launch a new product)")
 
         # Add campaign start date picker
@@ -84,7 +84,7 @@ def main():
         max_date = min_date + timedelta(days=365)
 
         campaign_start_date = st.date_input(
-            "Campaign Start Date",
+            "Campaign Start Date📆",
             min_value=min_date,
             max_value=max_date,
             value=min_date,
@@ -92,13 +92,13 @@ def main():
         )
 
         crm_file = st.file_uploader(
-            "Upload CRM data (CSV file)",
+            "Upload CRM Data (CSV file)",
             type=["csv"],
             help="Upload your CRM data for customer segmentation analysis"
         )
 
         brand_document = st.file_uploader(
-            "Upload brand document (optional)",
+            "Upload Brand Document (optional)",
             type=["txt"]
         )
 
@@ -154,7 +154,7 @@ def main():
 
 
 def display_results():
-    report_names = ["Brand Analysis", "Marketing Strategy", "Content Plan"]
+    report_names = ["Brand Analysis🔍", "Marketing Strategy🤔", "Content Plan📝"]
     tabs = st.tabs(report_names)
 
     report_files = {
