@@ -1,14 +1,16 @@
 import streamlit as st
 import os
+from datetime import datetime, timedelta
 from crewai import Crew
 from langchain_groq import ChatGroq
 from agents import create_agents
 from tasks import create_tasks
+from date_utils import get_current_ist_time, validate_campaign_start_date
 
 
 def initialize_api_keys():
     # Add API key input in sidebar
-    st.sidebar.title("API Configuration")
+    st.sidebar.title("API Configuration👩‍💻")
 
     # Option to use environment variable or manual input
     api_key_option = st.sidebar.radio(
@@ -64,21 +66,40 @@ def main():
 
     groq_api_key = initialize_api_keys()
 
-    st.title("v0.0.2 by Ranveer Singh Ranawat☢")
+    st.title("v0.0.4 by Ranveer Singh Ranawat☢")
+
+    current_time = get_current_ist_time()
+    st.write(f"Current Time: {current_time.strftime('%Y-%m-%d %I:%M %p IST')}")
 
     with st.form("brand_info_form"):
-        brand_name = st.text_input("Brand Name")
-        industry = st.text_input("Industry")
-        website = st.text_input("Website (if applicable)")
-        description = st.text_area("Brief description of the brand")
-
-        # New campaign goal field
-        campaign_goal = st.text_area("Campaign Goal",
+        brand_name = st.text_input("Brand Name🔤")
+        industry = st.text_input("Industry🏭")
+        website = st.text_input("Website (if applicable)🌐")
+        description = st.text_area("Brief Description of the Brand📝")
+        campaign_goal = st.text_area("Campaign Goal🎯",
                                      help="What do you want to achieve with this marketing campaign? (e.g., increase brand awareness, drive sales, launch a new product)")
 
+        # Add campaign start date picker
+        min_date = current_time.date()
+        max_date = min_date + timedelta(days=365)
+
+        campaign_start_date = st.date_input(
+            "Campaign Start Date📆",
+            min_value=min_date,
+            max_value=max_date,
+            value=min_date,
+            help="Select the start date for your campaign (must be today or a future date)"
+        )
+
+        crm_file = st.file_uploader(
+            "Upload CRM Data (CSV file)",
+            type=["csv"],
+            help="Upload your CRM data for customer segmentation analysis"
+        )
+
         brand_document = st.file_uploader(
-            "Upload brand document (optional)",
-            type=["pdf", "docx", "txt"]
+            "Upload Brand Document (optional)",
+            type=["txt"]
         )
 
         submitted = st.form_submit_button("Generate Marketing Strategy")
@@ -88,8 +109,11 @@ def main():
             st.error(
                 "Please fill in all required fields (Brand Name, Industry, Description, and Campaign Goal)."
             )
+        elif not validate_campaign_start_date(campaign_start_date):
+            st.error("Campaign start date must be today or a future date.")
         else:
-            document_path, temp_filename = handle_uploaded_file(brand_document)
+            brand_doc_path, brand_temp_filename, crm_path, crm_temp_filename = handle_uploaded_files(
+                brand_document, crm_file)
 
             brand_info = {
                 "brand_name": brand_name,
@@ -97,7 +121,10 @@ def main():
                 "website": website,
                 "description": description,
                 "campaign_goal": campaign_goal,
-                "brand_document_path": document_path
+                "campaign_start_date": campaign_start_date,
+                "brand_document_path": brand_doc_path,
+                "crm_file_path": crm_path,
+                "current_time": current_time
             }
 
             try:
@@ -120,12 +147,14 @@ def main():
             except Exception as e:
                 st.error(f"An error occurred: {str(e)}")
             finally:
-                if temp_filename and os.path.exists(temp_filename):
-                    os.remove(temp_filename)
+                # Clean up temporary files
+                for temp_file in [brand_temp_filename, crm_temp_filename]:
+                    if temp_file and os.path.exists(temp_file):
+                        os.remove(temp_file)
 
 
 def display_results():
-    report_names = ["Brand Analysis", "Marketing Strategy", "Content Plan"]
+    report_names = ["Brand Analysis🔍", "Marketing Strategy🤔", "Content Plan📝"]
     tabs = st.tabs(report_names)
 
     report_files = {
@@ -152,21 +181,24 @@ def display_results():
     st.balloons()
 
 
-def handle_uploaded_file(uploaded_file):
-    if uploaded_file is None:
-        return None, None
+def handle_uploaded_files(brand_document, crm_file):
+    brand_doc_path, brand_temp_filename = None, None
+    crm_path, crm_temp_filename = None, None
 
-    file_extension = os.path.splitext(uploaded_file.name)[1]
-    temp_filename = f"temp_brand_document{file_extension}"
+    if brand_document:
+        file_extension = os.path.splitext(brand_document.name)[1]
+        brand_temp_filename = f"temp_brand_document{file_extension}"
+        with open(brand_temp_filename, "wb") as f:
+            f.write(brand_document.read())
+        brand_doc_path = os.path.abspath(brand_temp_filename)
 
-    content = uploaded_file.read()
+    if crm_file:
+        crm_temp_filename = "temp_crm_data.csv"
+        with open(crm_temp_filename, "wb") as f:
+            f.write(crm_file.read())
+        crm_path = os.path.abspath(crm_temp_filename)
 
-    with open(temp_filename, "wb") as f:
-        f.write(content)
-
-    abs_path = os.path.abspath(temp_filename)
-
-    return abs_path, temp_filename
+    return brand_doc_path, brand_temp_filename, crm_path, crm_temp_filename
 
 
 if __name__ == "__main__":

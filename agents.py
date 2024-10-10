@@ -7,12 +7,24 @@ def create_agents(llm):
     file_read_tool = FileReadTool()
 
     agents = {
+        'junior_consultant': Agent(
+            role="Junior CRM Data Analyst",
+            goal="Analyze customer data from CRM to identify customer segments and behaviors",
+            backstory='''You are a skilled data analyst specializing in CRM data analysis. 
+            With 5 years of experience, you excel at extracting meaningful insights from customer data, 
+            identifying patterns, and creating detailed customer segmentation reports.''',
+            verbose=True,
+            allow_delegation=False,
+            tools=[file_read_tool],
+            llm=llm
+        ),
+
         'senior_consultant': Agent(
             role="Senior Marketing Strategy Consultant",
-            goal="Analyze the brand and campaign goals to develop targeted, goal-oriented marketing strategies.",
+            goal="Analyze brand, CRM insights, and campaign goals to develop targeted, goal-oriented marketing strategies.",
             backstory='''You are a Senior Marketing Strategy Consultant with 15 years of experience in developing 
-            goal-oriented marketing campaigns. You excel at analyzing brands and crafting strategies that align 
-            with specific campaign objectives while understanding market dynamics.''',
+            goal-oriented marketing campaigns. You excel at analyzing brands, customer data, and crafting strategies 
+            that align with specific campaign objectives while understanding market dynamics.''',
             verbose=True,
             allow_delegation=False,
             tools=[file_read_tool, SearchTools.search_internet,
