@@ -56,7 +56,8 @@ def create_tasks(agents, brand_info):
         '5. Compile a detailed report that includes:\n'
         '   a. Brand analysis (industry, purpose, products/services, vision, social media presence)\n'
         '   b. Integrated customer segment profiles with CRM insights and goal-specific strategies\n'
-        '   c. Analysis and effectiveness of similar marketing campaigns by the brand\'s competitors\n',
+        '   c. Analysis and effectiveness of similar marketing campaigns by the brand\'s competitors\n'
+        '   d. Links to all the webpages and resources you referred to.',
         agent=agents['senior_consultant'],
         expected_output='A comprehensive Brand and Customer Analysis Report in markdown format.',
         output_file='brand_and_customer_analysis.md',
@@ -74,7 +75,8 @@ def create_tasks(agents, brand_info):
                     '   c. Content themes and guidelines that support the campaign goal.\n'
                     '   d. Search for appropriate Creator Handles for collaboration based on chosen Social Media Platforms.\n'
                     f'4. Create a timeline starting from the campaign start date ({campaign_start_date}) (IST), outlining key milestones and phases\n'
-                    '5. Ensure all timing recommendations consider Indian Standard Time (IST) and typical Indian social media usage patterns.',
+                    '5. Ensure all timing recommendations consider Indian Standard Time (IST) and typical Indian social media usage patterns.'
+                    '6. Include links to all the webpages and resources you referred to.',
         agent=agents['senior_social_media_marketer'],
         expected_output='A detailed Marketing Strategy Report in markdown format.',
         output_file='marketing_strategy.md',
@@ -99,7 +101,8 @@ def create_tasks(agents, brand_info):
                     '   - Platform\n'
                     '   - Content type and outline.\n'
                     '   - Goal alignment\n'
-                    f'7. If the campaign start date ({campaign_start_date}) is in the future, include preparation tasks and timelines leading up to the start date.',
+                    f'7. If the campaign start date ({campaign_start_date}) is in the future, include preparation tasks and timelines leading up to the start date.'
+                    '8. Include links to all the webpages and resources you referred to.',
         agent=agents['content_creator'],
         expected_output='A comprehensive Content and Campaign Plan in markdown format.',
         output_file='content_and_campaign_plan.md',
