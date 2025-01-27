@@ -9,7 +9,7 @@ from date_utils import get_current_ist_time, validate_campaign_start_date
 
 
 def initialize_api_keys():
-    # Add API key input in sidebar
+    # API key input in sidebar
     st.sidebar.title("API Configuration👩‍💻")
 
     # Option to use environment variable or manual input
