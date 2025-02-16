@@ -2,6 +2,9 @@
 
 mymarketingcrew.ai is a multi-agent system designed to automate marketing campaign creation. Built as part of the Google Gen AI Exchange Hackathon, this app enables brands to generate targeted and effective marketing strategies with ease. Using advanced AI, this tool simplifies campaign planning, customer segmentation, and content strategy development. 🌟
 
+## Crew Workflow
+![Screenshot 2024-10-10 200615](https://github.com/user-attachments/assets/d5fbcf3b-c3d7-41f3-8df1-2d54d3a7ddfb)
+
 
 ## Features 🌟
 
